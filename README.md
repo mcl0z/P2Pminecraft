@@ -127,16 +127,6 @@ pip install websockets aiortc python-dotenv
 5. 客户端在本地创建一个端口，Minecraft客户端连接到该端口
 6. 所有Minecraft网络流量通过P2P连接转发给对方
 
-## 安装
-
-```bash
-# 克隆仓库
-git clone https://github.com/yourusername/minecraft-p2p.git
-cd minecraft-p2p
-
-# 安装依赖
-pip install -r requirements.txt
-```
 
 ## 使用方法
 
