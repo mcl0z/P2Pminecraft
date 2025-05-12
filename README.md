@@ -1,75 +1,4 @@
 # Minecraft P2P Connector / Minecraft P2P 连接器
-
-## English
-
-### Description
-
-This application provides a graphical user interface (GUI) built with Tkinter to facilitate Peer-to-Peer (P2P) connections for Minecraft using WebRTC. It allows one player (the "Server" or host) to share a room ID, enabling other players (the "Clients") to connect directly to the host's Minecraft game without needing traditional server hosting or port forwarding (though a signaling server is required for the initial handshake).
-
-### Features
-
-*   **Graphical User Interface:** Easy-to-use interface for configuration and monitoring connection status.
-*   **Server/Host Role:** Allows a player to host the game session. Automatically generates a Room ID to share.
-*   **Client Role:** Allows players to join a host's session using the Room ID.
-*   **WebRTC P2P Connection:** Utilizes WebRTC for direct player-to-player connections after initial signaling.
-*   **Signaling Server Configuration:** Uses a default public signaling server but allows specifying a custom one. The host can implicitly run a built-in signaling server if `127.0.0.1` or `localhost` is used as the signaling server address.
-*   **Multi-Client Support (Host):** The host can handle connections from multiple clients simultaneously.
-*   **Port Management:** Automatically checks local port availability for clients and suggests alternatives.
-*   **Logging:** Displays connection and application logs in the GUI.
-
-### Requirements
-
-*   Python 3.8 or higher
-*   Required Python packages:
-    *   `websockets`
-    *   `aiortc`
-    *   `python-dotenv` (Optional, for loading environment variables if used)
-
-Install requirements using pip:
-```bash
-pip install websockets aiortc python-dotenv
-```
-
-### How to Use
-
-1.  **Run the application:**
-    ```bash
-    python gui.py
-    ```
-2.  **Choose Role:**
-    *   **Server (Host / 房主):**
-        *   Select the "房主" role.
-        *   A Room ID will be automatically generated. Copy and share this ID with other players.
-        *   Ensure your Minecraft server (or single-player game opened to LAN) is running on the port specified in "远程端口" (Remote Port, defaults to 25565).
-        *   Configure the Signaling Server if needed (defaults usually work). Using `127.0.0.1` or `localhost` will start a local signaling server on the specified port.
-        *   Click "启动连接" (Start Connection).
-    *   **Client (客户端):**
-        *   Select the "客户端" role.
-        *   Enter the Room ID provided by the host.
-        *   Set the "本地端口" (Local Port). This is the port you will connect to in Minecraft (defaults to 25565). The application will check if this port is available.
-        *   Configure the Signaling Server address and port to match the host's settings (defaults usually work).
-        *   Click "启动连接" (Start Connection).
-        *   Once the log indicates a connection is established ("P2P连接已建立" or similar), launch Minecraft.
-        *   In Minecraft's Multiplayer menu, add a server with the address `127.0.0.1:<本地端口>` (e.g., `127.0.0.1:25565` if using the default local port).
-        *   Join the server.
-
-3.  **Monitor Status:** Check the "连接信息" (Connection Info) and "日志" (Log) panels for status updates.
-4.  **Stop Connection:** Click "停止连接" (Stop Connection) when finished.
-
-### Configuration
-
-All settings are configured via the GUI:
-
-*   **角色 (Role):** Choose "房主" (Server/Host) or "客户端" (Client).
-*   **房间ID (Room ID):** Unique identifier for the session. Auto-generated for the host, entered by clients.
-*   **用户名 (Username):** A display name for the signaling process (auto-generated).
-*   **本地端口 (Local Port):** (Client Role) The local TCP port Minecraft connects to.
-*   **远程端口 (Remote Port):** (Server Role) The TCP port the host's Minecraft server is listening on.
-*   **信令服务器 地址 (Signaling Server Address):** IP address or hostname of the signaling server.
-*   **信令服务器 端口 (Signaling Server Port):** Port of the signaling server.
-
----
-
 ## 中文 (Chinese)
 
 ### 描述
@@ -211,30 +140,7 @@ pip install -r requirements.txt
 
 ## 使用方法
 
-### 启动信令服务器（仅需一方运行）
-
-```bash
-python server.py
-```
-
-### 启动客户端（两方都需运行）
-
-```bash
-python client.py
-```
-
-按照程序提示输入房间ID和其他必要信息。
-
-## 配置
-
-可以通过创建`.env`文件来配置：
-
-```
-SERVER_HOST=your-signaling-server.com
-SERVER_PORT=8080
-LOCAL_PORT=25565
-```
-
+下载EXE文件,并运行
 ## 注意事项
 
 - 需要确保NAT穿透成功，否则可能无法建立P2P连接
