@@ -1,0 +1,242 @@
+# Minecraft P2P Connector / Minecraft P2P 连接器
+
+## English
+
+### Description
+
+This application provides a graphical user interface (GUI) built with Tkinter to facilitate Peer-to-Peer (P2P) connections for Minecraft using WebRTC. It allows one player (the "Server" or host) to share a room ID, enabling other players (the "Clients") to connect directly to the host's Minecraft game without needing traditional server hosting or port forwarding (though a signaling server is required for the initial handshake).
+
+### Features
+
+*   **Graphical User Interface:** Easy-to-use interface for configuration and monitoring connection status.
+*   **Server/Host Role:** Allows a player to host the game session. Automatically generates a Room ID to share.
+*   **Client Role:** Allows players to join a host's session using the Room ID.
+*   **WebRTC P2P Connection:** Utilizes WebRTC for direct player-to-player connections after initial signaling.
+*   **Signaling Server Configuration:** Uses a default public signaling server but allows specifying a custom one. The host can implicitly run a built-in signaling server if `127.0.0.1` or `localhost` is used as the signaling server address.
+*   **Multi-Client Support (Host):** The host can handle connections from multiple clients simultaneously.
+*   **Port Management:** Automatically checks local port availability for clients and suggests alternatives.
+*   **Logging:** Displays connection and application logs in the GUI.
+
+### Requirements
+
+*   Python 3.8 or higher
+*   Required Python packages:
+    *   `websockets`
+    *   `aiortc`
+    *   `python-dotenv` (Optional, for loading environment variables if used)
+
+Install requirements using pip:
+```bash
+pip install websockets aiortc python-dotenv
+```
+
+### How to Use
+
+1.  **Run the application:**
+    ```bash
+    python gui.py
+    ```
+2.  **Choose Role:**
+    *   **Server (Host / 房主):**
+        *   Select the "房主" role.
+        *   A Room ID will be automatically generated. Copy and share this ID with other players.
+        *   Ensure your Minecraft server (or single-player game opened to LAN) is running on the port specified in "远程端口" (Remote Port, defaults to 25565).
+        *   Configure the Signaling Server if needed (defaults usually work). Using `127.0.0.1` or `localhost` will start a local signaling server on the specified port.
+        *   Click "启动连接" (Start Connection).
+    *   **Client (客户端):**
+        *   Select the "客户端" role.
+        *   Enter the Room ID provided by the host.
+        *   Set the "本地端口" (Local Port). This is the port you will connect to in Minecraft (defaults to 25565). The application will check if this port is available.
+        *   Configure the Signaling Server address and port to match the host's settings (defaults usually work).
+        *   Click "启动连接" (Start Connection).
+        *   Once the log indicates a connection is established ("P2P连接已建立" or similar), launch Minecraft.
+        *   In Minecraft's Multiplayer menu, add a server with the address `127.0.0.1:<本地端口>` (e.g., `127.0.0.1:25565` if using the default local port).
+        *   Join the server.
+
+3.  **Monitor Status:** Check the "连接信息" (Connection Info) and "日志" (Log) panels for status updates.
+4.  **Stop Connection:** Click "停止连接" (Stop Connection) when finished.
+
+### Configuration
+
+All settings are configured via the GUI:
+
+*   **角色 (Role):** Choose "房主" (Server/Host) or "客户端" (Client).
+*   **房间ID (Room ID):** Unique identifier for the session. Auto-generated for the host, entered by clients.
+*   **用户名 (Username):** A display name for the signaling process (auto-generated).
+*   **本地端口 (Local Port):** (Client Role) The local TCP port Minecraft connects to.
+*   **远程端口 (Remote Port):** (Server Role) The TCP port the host's Minecraft server is listening on.
+*   **信令服务器 地址 (Signaling Server Address):** IP address or hostname of the signaling server.
+*   **信令服务器 端口 (Signaling Server Port):** Port of the signaling server.
+
+---
+
+## 中文 (Chinese)
+
+### 描述
+
+本应用程序提供了一个使用 Tkinter 构建的图形用户界面 (GUI)，旨在通过 WebRTC 技术简化 Minecraft 的点对点 (P2P) 连接。它允许一名玩家（"房主"）分享一个房间 ID，使其他玩家（"客户端"）能够直接连接到房主的游戏，通常无需传统的服务器托管或端口转发（但初始连接建立需要一个信令服务器）。
+
+### 特性
+
+*   **图形用户界面:** 易于使用的界面，用于配置连接和监控状态。
+*   **房主角色:** 允许玩家托管游戏会话。自动生成房间 ID 以供分享。
+*   **客户端角色:** 允许玩家使用房主提供的房间 ID 加入会话。
+*   **WebRTC P2P 连接:** 在初始信令交换后，利用 WebRTC 进行玩家间的直接连接。
+*   **信令服务器配置:** 使用默认的公共信令服务器，但也允许指定自定义服务器。如果房主将信令服务器地址设置为 `127.0.0.1` 或 `localhost`，则会自动在本机启动一个内置信令服务器。
+*   **多客户端支持 (房主):** 房主可以同时处理来自多个客户端的连接。
+*   **端口管理:** 为客户端自动检查本地端口的可用性，并建议备选端口。
+*   **日志记录:** 在 GUI 中显示连接和应用程序的日志。
+
+### 需求
+
+*   Python 3.8 或更高版本
+*   所需的 Python 包:
+    *   `websockets`
+    *   `aiortc`
+    *   `python-dotenv` (可选, 如果需要加载环境变量)
+
+使用 pip 安装依赖:
+```bash
+pip install websockets aiortc python-dotenv
+```
+
+### 如何使用
+
+1.  **运行应用程序:**
+    ```bash
+    python gui.py
+    ```
+2.  **选择角色:**
+    *   **房主 (Server/Host):**
+        *   选择 "房主" 角色。
+        *   程序会自动生成一个房间 ID。复制并分享给其他玩家。
+        *   确保你的 Minecraft 服务器（或对局域网开放的单人游戏）正在 "远程端口" 指定的端口上运行（默认为 25565）。
+        *   如果需要，配置信令服务器（默认设置通常可用）。使用 `127.0.0.1` 或 `localhost` 作为地址将在指定端口启动一个本地信令服务器。
+        *   点击 "启动连接"。
+    *   **客户端 (Client):**
+        *   选择 "客户端" 角色。
+        *   输入房主提供的房间 ID。
+        *   设置 "本地端口"。这是你在 Minecraft 中连接时使用的端口（默认为 25565）。程序会检查此端口是否可用。
+        *   配置信令服务器地址和端口，使其与房主的设置匹配（默认设置通常可用）。
+        *   点击 "启动连接"。
+        *   当日志显示连接已建立（例如 "P2P连接已建立"），启动 Minecraft。
+        *   在 Minecraft 的多人游戏菜单中，添加一个服务器，地址为 `127.0.0.1:<本地端口>` (例如，如果使用默认本地端口，则为 `127.0.0.1:25565`)。
+        *   加入服务器。
+
+3.  **监控状态:** 查看 "连接信息" 和 "日志" 面板以获取状态更新。
+4.  **停止连接:** 完成后点击 "停止连接"。
+
+### 配置
+
+所有设置均通过 GUI 进行配置:
+
+*   **角色:** 选择 "房主" 或 "客户端"。
+*   **房间ID:** 会话的唯一标识符。房主自动生成，客户端输入。
+*   **用户名:** 用于信令过程的显示名称（自动生成）。
+*   **本地端口:** (客户端角色) Minecraft 连接到的本地 TCP 端口。
+*   **远程端口:** (房主角色) 房主的 Minecraft 服务器监听的 TCP 端口。
+*   **信令服务器 地址:** 信令服务器的 IP 地址或主机名。
+*   **信令服务器 端口:** 信令服务器的端口。
+
+## 多客户端连接问题
+
+当多个客户端同时连接到一个服务端时，出现以下问题：
+- 只有最早连接的客户端能保持连接
+- 其他客户端出现 "Cannot handle answer in signaling state 'stable'" 错误
+- 服务端的数据只能发送给一个客户端
+
+## 解决方案
+
+我们通过以下改进解决了这个问题：
+
+### 1. 信令服务器的改进
+- 修改 `SignalingServer` 类的 `relay_message` 方法，添加目标ID支持
+- 增强 `handler` 函数，建立客户端之间的映射关系，确保消息能正确路由
+
+### 2. 多客户端连接管理
+- 创建多客户端连接管理系统，为每个客户端创建独立的 `RTCPeerConnection` 实例
+- 使用 `peer_connections` 和 `data_channels` 字典存储每个客户端的连接
+- 实现 `create_peer_connection_for_client` 方法，为每个客户端创建独立连接
+
+### 3. 数据路由机制
+- 添加会话ID与客户端ID的映射关系，确保数据能正确回传给发送方
+- 在 `process_minecraft_server_data` 方法中实现智能路由，根据会话ID找到目标客户端
+- 优先发送数据给特定客户端，若无法确定则广播给所有连接的客户端
+
+### 4. 资源管理和清理
+- 改进 `shutdown` 方法，确保清理所有对等连接和数据通道
+- 为每个连接添加错误处理和自动重连机制
+
+## 技术实现细节
+
+1. 服务端角色：
+   - 监听新客户端加入事件
+   - 为每个新客户端创建独立的P2P连接
+   - 创建数据通道并发送offer
+   - 根据会话ID将服务器响应路由到正确的客户端
+
+2. 客户端角色：
+   - 接收服务端发起的连接请求
+   - 创建应答并建立P2P连接
+   - 通过WebRTC数据通道与服务端交换Minecraft数据包
+
+## 主要改进的文件和方法
+
+- `SignalingServer` 类的 `relay_message` 方法
+- `handle_signaling` 方法：正确处理带有sender_id和target的消息
+- `handle_new_peer` 方法：使用多客户端连接管理系统
+- `process_minecraft_server_data` 方法：实现智能数据路由
+- `process_minecraft_message` 方法：添加会话ID与客户端ID的映射
+- `shutdown` 方法：完整清理所有连接资源
+
+## 工作原理
+
+1. 两个玩家都运行客户端应用
+2. 客户端连接到中央信令服务器
+3. 通过信令服务器交换WebRTC连接信息（ICE候选项、SDP等）
+4. 建立P2P直接连接
+5. 客户端在本地创建一个端口，Minecraft客户端连接到该端口
+6. 所有Minecraft网络流量通过P2P连接转发给对方
+
+## 安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/yourusername/minecraft-p2p.git
+cd minecraft-p2p
+
+# 安装依赖
+pip install -r requirements.txt
+```
+
+## 使用方法
+
+### 启动信令服务器（仅需一方运行）
+
+```bash
+python server.py
+```
+
+### 启动客户端（两方都需运行）
+
+```bash
+python client.py
+```
+
+按照程序提示输入房间ID和其他必要信息。
+
+## 配置
+
+可以通过创建`.env`文件来配置：
+
+```
+SERVER_HOST=your-signaling-server.com
+SERVER_PORT=8080
+LOCAL_PORT=25565
+```
+
+## 注意事项
+
+- 需要确保NAT穿透成功，否则可能无法建立P2P连接
+- 如果无法建立直接连接，系统会自动回退到TURN服务器中继模式
+- 该方案仅适用于Minecraft Java版 
